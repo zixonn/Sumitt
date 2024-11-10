@@ -1,14 +1,21 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TextStyle, View } from 'react-native';
+import React from 'react';
 
-const MyText = () => {
+type TextProps = {
+  color?: string;
+  fontSize?: number;
+  style?: TextStyle; 
+  children: React.ReactNode;
+};
+
+const MyText = (props: TextProps) => {
   return (
-    <View>
-      <Text>MyText</Text>
-    </View>
-  )
-}
+    <Text style={[{ color: props.color, fontSize: props.fontSize }, props.style]}>
+      {props.children}
+    </Text>
+  );
+};
 
-export default MyText
+export default MyText;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
