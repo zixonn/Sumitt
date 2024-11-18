@@ -1,4 +1,4 @@
-import { Text, View, TextStyle } from 'react-native';
+import { Text, TextStyle } from 'react-native';
 import React from 'react';
 
 interface TextProps {
@@ -10,11 +10,9 @@ interface TextProps {
 
 const MyText = ({ color, fontSize, children, style }: TextProps) => {
   return (
-    <View>
       <Text style={[{color:color, fontSize: fontSize}, style]}>
         {children}
       </Text>
-    </View>
   );
 };
 

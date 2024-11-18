@@ -36,4 +36,9 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+#openai 
 .env
+
+#firebase
+firebase.js

@@ -1,15 +1,13 @@
 import { View, Text, Button, StyleSheet, TextInput } from "react-native";
 import { useState } from "react";
 
-const HomePage = () => {
+const index = () => {
   const [userInput, setUserInput] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const callOpenAI = async () => {
     setLoading(true);
-    setError("");
     try {
       const apiKey = process.env.EXPO_PUBLIC_API_KEY;
       if (!apiKey) throw new Error("API key is missing!");
@@ -31,8 +29,7 @@ const HomePage = () => {
       const data = await res.json();
       setResponse(data.choices[0].message.content);
     } catch (err) {
-      setError(err.message);
-      setResponse("");
+      setResponse("Error");
     } finally {
       setLoading(false);
     }
@@ -43,7 +40,7 @@ const HomePage = () => {
       <Text style={styles.text}>Enter your message:</Text>
       <TextInput style={styles.input} placeholder="Type your question" value={userInput} onChangeText={setUserInput} />
       <Button title="Call OpenAI" onPress={callOpenAI} />
-      <Text style={styles.responseText}>{loading ? "Loading..." : response || error}</Text>
+      <Text style={styles.responseText}>{loading ? "Loading..." : response }</Text>
     </View>
   );
 };
@@ -52,7 +49,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 16 },
   text: { fontSize: 18, marginBottom: 10 },
   input: { height: 40, borderColor: "gray", borderWidth: 1, marginBottom: 20, paddingHorizontal: 10, width: "80%" },
-  responseText: { fontSize: 16, textAlign: "center", color: (error && "red") || "black" },
+  responseText: { fontSize: 16, textAlign: "center", color: "black" },
 });
 
-export default HomePage;
+export default index;
