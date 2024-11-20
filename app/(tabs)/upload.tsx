@@ -1,18 +1,22 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Page from '@/components/Page'
-import MyText from '@/components/MyText'
-import { router } from 'expo-router'
+import { Button, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import Page from '@/components/Page';
+import { router } from 'expo-router';
+import InputOption from '@/components/InputOption';
 
-const upload = () => {
+const Upload = () => {
+  const [selectedOption, setSelectedOption] = useState<string>(''); 
+
   return (
-    <Page>
-      <MyText>Cool!</MyText>
-      <Button title = "Back" onPress={router.back} />
+    <Page style={{ justifyContent: 'flex-start', marginTop: '5%' }}>
+      <InputOption/>
+      <InputOption/>
+      <InputOption/>
+      <Button title="Back" onPress={router.back} />
     </Page>
-  )
-}
+  );
+};
 
-export default upload
+export default Upload;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

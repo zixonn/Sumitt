@@ -24,7 +24,7 @@ export default function MainNavigator() {
       <Tabs.Screen
         name="upload"
         options={{
-          title: "Upload",
+          title: "Note Input",
           tabBarButton: () => (
             <TouchableOpacity
               style={[styles.uploadButton, { backgroundColor: colors.primary }]}
@@ -33,9 +33,8 @@ export default function MainNavigator() {
               <Icon name="add" size={25} color="#fff" />
             </TouchableOpacity>
           ),
-          tabBarStyle: { display: "none" }, 
-          headerShown:false,
-          ...TransitionPresets.ShiftTransition
+          tabBarStyle: { display:"none"}, 
+          ...TransitionPresets.ShiftTransition,
         }}
       />
       <Tabs.Screen name="study" options={screenOptions("book", "Study")} />
