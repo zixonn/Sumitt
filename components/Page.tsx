@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ViewStyle } from 'react-native'
 import React from 'react'
+import { useTheme } from '@react-navigation/native'
 
 interface PageProps {
     style?: ViewStyle,
@@ -8,7 +9,7 @@ interface PageProps {
 
 const Page = (props:PageProps) => {
   return (
-    <View style = {[styles.con, props.style]}>
+    <View style = {[styles.con, {backgroundColor:useTheme().colors.background}, props.style]}>
         {props.children}
     </View>
   )
@@ -20,6 +21,6 @@ const styles = StyleSheet.create({
     con:{
         flex:1,
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
     }
 })

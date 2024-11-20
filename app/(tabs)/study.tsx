@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import Page from '@/components/Page'
+import MyText from '@/components/MyText'
 
 const study = () => {
   return (
-    <View>
-      <Text>study</Text>
-    </View>
+    <Page>
+      <MyText>Hello</MyText>
+    </Page>
   )
 }
 
