@@ -1,0 +1,11 @@
+import { Stack } from "expo-router";
+
+export default function InputNavigator(){
+    return(
+        <Stack>
+            <Stack.Screen name="image" options={{ title: "Upload Image"}}/>
+            <Stack.Screen name="manual"  options={{ title: "Manual Input"}} />
+            <Stack.Screen name="textfile"  options={{ title: "Upload Text File"}} />
+        </Stack>
+    )
+}

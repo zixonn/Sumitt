@@ -1,4 +1,4 @@
-import { Button, StyleSheet } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import Page from '@/components/Page';
 import { router } from 'expo-router';
@@ -9,10 +9,12 @@ const Upload = () => {
 
   return (
     <Page style={{ justifyContent: 'flex-start', marginTop: '5%' }}>
-      <InputOption/>
-      <InputOption/>
-      <InputOption/>
-      <Button title="Back" onPress={router.back} />
+      <InputOption option='Image'/>
+      <InputOption option='Text File'/>
+      <InputOption option='Manual Input'/>
+      <View style = {{alignSelf:"flex-start", margin:"6%"}}>
+       <Button title="Cancel" onPress={router.back} />
+      </View>
     </Page>
   );
 };

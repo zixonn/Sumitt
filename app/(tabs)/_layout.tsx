@@ -24,7 +24,7 @@ export default function MainNavigator() {
       <Tabs.Screen
         name="upload"
         options={{
-          title: "Note Input",
+          title: "Select Note Input Option",
           tabBarButton: () => (
             <TouchableOpacity
               style={[styles.uploadButton, { backgroundColor: colors.primary }]}
