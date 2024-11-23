@@ -15,6 +15,7 @@ export default function RootLayout() {
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)"/>
           <Stack.Screen name="(input)"/>
+          <Stack.Screen name="(summary)"/>
         </Stack>
       </SafeAreaProvider>
     </ThemeProvider>

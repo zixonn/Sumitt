@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
 
 interface InputOptionProps {
-  option: 'Image' | 'Text File' | 'Manual Input';
+  option: 'Upload Image' | 'Upload Text File' | 'Manual Input' | 'Take Picture';
 }
 
 const InputOption = (props: InputOptionProps) => {
@@ -15,12 +15,14 @@ const InputOption = (props: InputOptionProps) => {
 
 const renderIcon = () => {
     switch (props.option) {
-      case 'Image':
+      case 'Upload Image':
         return <Icon name="image" size={30} color={colors.primary} />;
-      case 'Text File':
+      case 'Upload Text File':
         return <Icon name="file1" type="antdesign" size={30} color={colors.primary} />;
       case 'Manual Input':
         return <Icon name="keyboard" size={30} color={colors.primary} />;
+      case 'Take Picture':
+          return <Icon name="camera" size={30} color={colors.primary} />;
       default:
         return null;
     }
@@ -28,15 +30,18 @@ const renderIcon = () => {
 
 const navigateToInput = () => {
   switch(props.option){
-    case "Image":
+    case "Upload Image":
       router.navigate(`/(input)/image`)
       break;
     case "Manual Input":
       router.navigate(`/(input)/manual`)
       break;
-    case "Text File":
+    case "Upload Text File":
       router.navigate(`/(input)/textfile`)
       break;
+    case "Take Picture":
+        router.navigate(`/(input)/picture`)
+        break;
     default:
       null
   }

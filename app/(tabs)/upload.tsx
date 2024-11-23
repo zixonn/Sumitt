@@ -9,10 +9,11 @@ const Upload = () => {
 
   return (
     <Page style={{ justifyContent: 'flex-start', marginTop: '5%' }}>
-      <InputOption option='Image'/>
-      <InputOption option='Text File'/>
+      <InputOption option='Take Picture'/>
+      <InputOption option='Upload Image'/>
+      <InputOption option='Upload Text File'/>
       <InputOption option='Manual Input'/>
-      <View style = {{alignSelf:"flex-start", margin:"6%"}}>
+      <View style = {{margin:"6%",width:"90%"}}>
        <Button title="Cancel" onPress={router.back} />
       </View>
     </Page>
