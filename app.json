@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "softwareKeyboardLayoutMode": "pan"
     },
     "web": {
       "bundler": "metro",
@@ -37,6 +38,14 @@
         "expo-image-picker",
         {
           "photosPermission": "The app accesses your photos to help summarize notes"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Sumitt to access your camera",
+          "microphonePermission": "Allow Sumitt to access your microphone",
+          "recordAudioAndroid": true
         }
       ]
     ],

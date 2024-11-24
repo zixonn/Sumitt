@@ -19,8 +19,8 @@ const index = () => {
           Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: [{ role: "system", content: "You are a helpful assistant pirate" }, { role: "user", content: userInput }],
+          model: "gpt-4o",
+          messages: [{ role: "system", content: "You are a helpful assistant" }, { role: "user", content: userInput }],
         }),
       });
 

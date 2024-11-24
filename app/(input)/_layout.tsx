@@ -6,7 +6,6 @@ export default function InputNavigator(){
             <Stack.Screen name="picture"  options={{ title: "Take Picture"}} />
             <Stack.Screen name="image" options={{ title: "Upload Image"}}/>
             <Stack.Screen name="manual"  options={{ title: "Manual Input"}} />
-            <Stack.Screen name="textfile"  options={{ title: "Upload Text File"}} />
         </Stack>
     )
 }

@@ -73,7 +73,7 @@ const ImageComponent = () => {
   function generateSummary() {
     if (base64Image) {
       router.navigate({
-        pathname: '/(summary)/summary',
+        pathname: '/(summary)/summaryimage',
         params: { uri: base64Image }, 
       });
     }
