@@ -3,14 +3,14 @@ import React from 'react'
 import Page from '@/components/Page'
 import MyText from '@/components/MyText'
 
-const study = () => {
+const settings = () => {
   return (
     <Page>
-      <MyText>Hello</MyText>
+        <MyText>Settings</MyText>
     </Page>
   )
 }
 
-export default study
+export default settings
 
 const styles = StyleSheet.create({})

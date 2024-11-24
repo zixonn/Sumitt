@@ -20,11 +20,11 @@ export default function MainNavigator() {
   return (
     <Tabs screenOptions={{ tabBarShowLabel: false, tabBarStyle: { paddingTop: "1%" }, 
     headerShadowVisible:!useTheme().dark }}>
-      <Tabs.Screen name="index" options={screenOptions("home", "Home")} />
+      <Tabs.Screen name="index" options={screenOptions("history", "History")} />
       <Tabs.Screen
         name="upload"
         options={{
-          title: "Select Note Input Option",
+          title: "New Summary",
           tabBarButton: () => (
             <TouchableOpacity
               style={[styles.uploadButton, { backgroundColor: colors.primary }]}
@@ -37,7 +37,7 @@ export default function MainNavigator() {
           ...TransitionPresets.ShiftTransition,
         }}
       />
-      <Tabs.Screen name="study" options={screenOptions("book", "Study")} />
+      <Tabs.Screen name="settings" options={screenOptions("settings", "Settings")} />
     </Tabs>
   );
 }
