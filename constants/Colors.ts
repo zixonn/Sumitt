@@ -4,7 +4,7 @@ const MyLightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'rgb(58, 139, 255)',
+    primary: 'rgb(81, 202, 178)',
     background: 'rgb(245, 247, 250)',
     card: 'rgb(255, 255, 255)',
     text: 'rgb(40, 44, 52)',
@@ -17,7 +17,7 @@ const MyDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    primary: 'rgb(58, 139, 255)',
+    primary: 'rgb(81, 202, 178)',
     background: 'rgb(18, 22, 28)',
     card: 'rgb(28, 32, 38)',
     text: 'rgb(229, 229, 231)',

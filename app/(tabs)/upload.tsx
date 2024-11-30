@@ -1,87 +1,64 @@
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 import React, { useState } from 'react';
 import Page from '@/components/Page';
-import { useTheme } from '@react-navigation/native';
+import InputType from '@/components/InputType';
+import MyButton from '@/components/MyButton';
 import { router } from 'expo-router';
-import { CheckBox } from '@rneui/base';
+import { useTheme } from '@react-navigation/native';
 
 const Upload = () => {
-  const { colors } = useTheme();
-  const [text, setText] = useState('');
-  const [isUrlMode, setIsUrlMode] = useState(false);
-  const [summaryType, setSummaryType] = useState('short');
+  const [selectedOption, setSelectedOption] = useState<string | null>(null); 
+  const [inputText, setInputText] = useState("")
+
+  const handleSelectOption = (option: string) => {
+    if (selectedOption !== option) {
+      setSelectedOption(option);
+    }
+  };
+
+  const handleCancel = () => {
+    setSelectedOption(null);  
+    setInputText('');        
+    router.back();          
+  };
 
   async function generateSummary() {
     router.navigate({
       pathname: "/(summary)/summary",
-      params: { text: text, summaryType: summaryType }
+      params: { userInput: inputText }
     });
   }
 
+  const { colors } = useTheme();
+
   return (
-    <Page style={{ justifyContent: 'flex-start', marginTop: '3%' }}>
-      <CheckBox
-        title="Enter URL"
-        checked={isUrlMode}
-        onPress={() => setIsUrlMode(!isUrlMode)}
-        containerStyle={{ backgroundColor: 'transparent', width: "90%" }}
-        textStyle={{ color: colors.text }}
-      />
-      <TextInput
-        value={text}
-        onChangeText={(value) => setText(value)}
-        placeholder={isUrlMode ? 'Paste URL' : 'Paste text'}
-        textAlignVertical="top"
-        returnKeyType="done"
-        returnKeyLabel="Done"
-        multiline={true}
-        style={[
-          styles.textInput,
-          {
-            borderColor: colors.border,
-            backgroundColor: colors.card,
-            color: colors.text,
-            height: isUrlMode ? "10%" : "50%"
-          },
-        ]}
-      />
-
-      <View style={styles.radioContainer}>
-        <CheckBox
-          title="Short"
-          checked={summaryType === 'short'}
-          onPress={() => setSummaryType('short')}
-          containerStyle={styles.radioButton}
-          textStyle={{ color: colors.text }}
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
-        />
-        <CheckBox
-          title="Detailed"
-          checked={summaryType === 'detailed'}
-          onPress={() => setSummaryType('detailed')}
-          containerStyle={styles.radioButton}
-          textStyle={{ color: colors.text }}
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
-        />
-        <CheckBox
-          title="Bullet "
-          checked={summaryType === 'bullet'}
-          onPress={() => setSummaryType('bullet')}
-          containerStyle={styles.radioButton}
-          textStyle={{ color: colors.text }}
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
-        />
-      </View>
-
-      <View style={styles.button}>
-        <Button title="Cancel" onPress={router.back} />
-        <Button title="Clear" onPress={ () => setText('')} />
-        <Button disabled={!text} title="Summarize" onPress={generateSummary} />
-      </View>
-    </Page>
+    <Page style={{ justifyContent: 'flex-start', alignItems: "flex-start", margin: "5%" }}>
+      <InputType name='URL' subtitle='Website or article URL' selected={selectedOption === 'URL'} onPress={() => handleSelectOption('URL')} />
+      <InputType name='Manual Input' subtitle='Input text manually' selected={selectedOption === 'Manual Input'} onPress={() => handleSelectOption('Manual Input')} />
+      {selectedOption ? (
+        selectedOption === "URL" ? (
+          <>
+            <TextInput 
+              value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter URL" 
+              textAlignVertical="top" returnKeyType="done" returnKeyLabel="Done" multiline 
+              style={[styles.textInput, { borderColor: colors.border, backgroundColor: colors.card, color: colors.text, height: "8%" }]} />
+            <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='100%' marginTop='5%' />
+            <MyButton title='Cancel' onPress={handleCancel} width='100%' marginTop='2%' />
+          </>
+        ) : (
+          <>
+            <TextInput
+              value={inputText} onChangeText={text => setInputText(text)} placeholder="Enter text to summarize" 
+              textAlignVertical="top" returnKeyType="done" returnKeyLabel="Done" multiline 
+              style={[styles.textInput, { borderColor: colors.border, backgroundColor: colors.card, color: colors.text, height: "60%" }]} />
+            <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='100%' marginTop='5%' />
+            <MyButton title='Cancel' onPress={handleCancel} width='100%' marginTop='2%' />
+          </>
+        )
+      ) : (
+        <MyButton title='Cancel' onPress={handleCancel} width="100%" marginVertical="3%" />
+      )}
+  </Page>
   );
 };
 
@@ -90,20 +67,9 @@ export default Upload;
 const styles = StyleSheet.create({
   textInput: {
     borderWidth: 1,
-    width: '90%',
+    borderRadius:10,
+    width: '100%',
     padding: '3%',
-  },
-  radioContainer: {
-    width: '95%',
-    marginVertical: '2%',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  radioButton: {
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    paddingHorizontal: 0,
   },
   button: {
     width: '90%',

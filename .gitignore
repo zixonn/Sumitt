@@ -39,6 +39,3 @@ app-example
 
 #openai 
 .env
-
-#firebase
-firebase.js

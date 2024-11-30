@@ -6,6 +6,8 @@ interface TextProps {
   color?: string;
   fontSize?: 'small' | 'medium' | 'large' | 'XL';  
   bold?: boolean;  
+  opacity?:number;
+  textAlign?:string;
   style?: TextStyle; 
   children: React.ReactNode;
 }
@@ -17,10 +19,10 @@ const fontSizes = {
   XL: 24,
 };
 
-const MyText = ({ color = useTheme().colors.text, fontSize = 'medium', bold = false, children, style }: TextProps) => {
+const MyText = ({ color = useTheme().colors.text, fontSize = 'medium', bold = false, children, style, opacity, textAlign }: TextProps) => {
   const fontWeight = bold ? 'bold' : 'normal';  
   return (
-    <Text style={[{ color, fontSize: fontSizes[fontSize], fontWeight }, style]}>
+    <Text style={[{ color, fontSize: fontSizes[fontSize], fontWeight, opacity, textAlign }, style]}>
       {children}
     </Text>
   );
