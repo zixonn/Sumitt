@@ -14,6 +14,7 @@ export default function RootLayout() {
         <StatusBar />
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)"/>
+          <Stack.Screen name="(options)"/>
           <Stack.Screen name="(summary)"/>
         </Stack>
       </SafeAreaProvider>

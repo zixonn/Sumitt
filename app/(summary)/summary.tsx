@@ -41,17 +41,16 @@ const Summary = () => {
       const data = await res.json();
       setSummary(data.choices?.[0]?.message?.content);
       setError(null);
-    } catch (error) {
-      console.error(error);
-      setError("Something went wrong.");
-      setSummary("");
-    } finally {
       setLoading(false);
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 1000,
         useNativeDriver: true,
       }).start();
+    } catch (error) {
+      console.error(error);
+      setError("Something went wrong.");
+      setSummary("");
     }
   };
 
@@ -60,7 +59,6 @@ const Summary = () => {
       generateSummary();
     }
   }, [userInput]);
-
 
   const handleCopy = () => {
     Clipboard.setStringAsync(summary);
@@ -73,9 +71,9 @@ const Summary = () => {
         summary: summary,
         timestamp: currentDate,
       };
-  
+
       const key = `summary_${new Date().getTime()}`;
-  
+
       await AsyncStorage.setItem(key, JSON.stringify(newSummary));
       console.log('Summary saved successfully');
     } catch (error) {
@@ -93,11 +91,9 @@ const Summary = () => {
     setError(null);
     router.navigate('/(tabs)');
   };
-  
-  
 
   return (
-    <Page style={{ backgroundColor: colors.card, padding: "3%" }}>
+    <Page style={{ backgroundColor: colors.card, padding: "5%" }}>
       {loading ? (
         <>
           <MyText bold fontSize="large">Summarizing with AI...</MyText>
@@ -112,14 +108,16 @@ const Summary = () => {
       ) : (
         <Animated.View style={[{ opacity: fadeAnim }, styles.myCon]}>
           <View style={styles.headerCon}>
-            <Icon name="copy1" type="antdesign" size={25} color={colors.primary} onPress={handleCopy} />
+            <Icon name="copy" type="ionicon" size={25} color={colors.primary} onPress={handleCopy} />
             <MyText bold fontSize="large">Summary</MyText>
           </View>
           <ScrollView>
             <MyText>{summary}</MyText>
           </ScrollView>
-          <MyButton marginTop="5%" width="75%" title="Save" onPress={handleSave} />
-          <MyButton marginVertical="3%" width="75%" title="Back" onPress={handleGoBack} />
+          <View style = {styles.buttonRow}>
+            <MyButton width="30%" title="Save" onPress={handleSave} />
+            <MyButton width="30%" title="Ok" onPress={handleGoBack} />
+          </View>
         </Animated.View>
       )}
     </Page>
@@ -139,6 +137,13 @@ const styles = StyleSheet.create({
     flexDirection: "row-reverse",
     width: "100%",
     marginTop: "10%",
-    marginBottom: "5%",
+    marginBottom: "4%"
   },
+  buttonRow:{
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection:"row",
+    marginVertical:"3%",
+    gap:"4%"
+  }
 });

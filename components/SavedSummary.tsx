@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "95%",
     padding: "5%",
+    paddingBottom:"10%"
   },
   topRow:{
     flexDirection:"row",

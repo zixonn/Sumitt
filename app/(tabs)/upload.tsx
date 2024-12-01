@@ -42,8 +42,11 @@ const Upload = () => {
               value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter URL" 
               textAlignVertical="top" returnKeyType="done" returnKeyLabel="Done" multiline 
               style={[styles.textInput, { borderColor: colors.border, backgroundColor: colors.card, color: colors.text, height: "8%" }]} />
-            <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='100%' marginTop='5%' />
-            <MyButton title='Cancel' onPress={handleCancel} width='100%' marginTop='2%' />
+            <View style = {styles.buttonRow}>
+                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='30%' />
+                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='30%' />
+                <MyButton title='Cancel' onPress={handleCancel} width='30%' />
+            </View>
           </>
         ) : (
           <>
@@ -51,8 +54,11 @@ const Upload = () => {
               value={inputText} onChangeText={text => setInputText(text)} placeholder="Enter text to summarize" 
               textAlignVertical="top" returnKeyType="done" returnKeyLabel="Done" multiline 
               style={[styles.textInput, { borderColor: colors.border, backgroundColor: colors.card, color: colors.text, height: "60%" }]} />
-            <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='100%' marginTop='5%' />
-            <MyButton title='Cancel' onPress={handleCancel} width='100%' marginTop='2%' />
+            <View style = {styles.buttonRow}>
+                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='30%' />
+                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='30%' />
+                <MyButton title='Cancel' onPress={handleCancel} width='30%' />
+            </View>
           </>
         )
       ) : (
@@ -78,4 +84,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: '2%',
   },
+  buttonRow:{
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection:"row",
+    marginVertical:"3%",
+    gap:"4%"
+  }
 });
