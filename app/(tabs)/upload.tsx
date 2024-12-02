@@ -1,14 +1,24 @@
 import { Button, StyleSheet, TextInput, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import InputType from '@/components/InputType';
 import MyButton from '@/components/MyButton';
-import { router } from 'expo-router';
+import { router, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
 import { useTheme } from '@react-navigation/native';
 
 const Upload = () => {
+  
   const [selectedOption, setSelectedOption] = useState<string | null>(null); 
   const [inputText, setInputText] = useState("")
+  const [selectedOptions, setSelectedOptions] = useState(null);
+
+  const { options } = useGlobalSearchParams()
+  useEffect(() => {
+    if (options) {
+      console.log(options)
+      setSelectedOptions(options);
+    }
+  }, [options]);
 
   const handleSelectOption = (option: string) => {
     if (selectedOption !== option) {
@@ -25,9 +35,10 @@ const Upload = () => {
   async function generateSummary() {
     router.navigate({
       pathname: "/(summary)/summary",
-      params: { userInput: inputText }
+      params: { userInput: inputText, options: selectedOptions }
     });
   }
+
 
   const { colors } = useTheme();
 

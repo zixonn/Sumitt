@@ -14,7 +14,7 @@ const Summary = () => {
   const [loading, setLoading] = useState(true);
   const [summary, setSummary] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const { userInput } = useLocalSearchParams();
+  const { userInput, options } = useLocalSearchParams();
   const { colors } = useTheme();
 
   const fadeAnim = useState(new Animated.Value(0))[0];
@@ -30,7 +30,11 @@ const Summary = () => {
         },
         body: JSON.stringify({
           model: "gpt-4o",
-          messages: [{ role: "system", content: "You are a helpful assistant" }, { role: "user", content: userInput }],
+          messages: [
+            { role: "system", 
+              content: `Summarize the text. Use the following options IF AVAILABLE: ${options} ` }, 
+            { role: "user", content: userInput },
+          ],
         }),
       });
 
@@ -111,7 +115,7 @@ const Summary = () => {
             <Icon name="copy" type="ionicon" size={25} color={colors.primary} onPress={handleCopy} />
             <MyText bold fontSize="large">Summary</MyText>
           </View>
-          <ScrollView>
+          <ScrollView contentContainerStyle = {{paddingBottom:"20%"}}>
             <MyText>{summary}</MyText>
           </ScrollView>
           <View style = {styles.buttonRow}>
