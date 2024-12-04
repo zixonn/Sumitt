@@ -18,6 +18,6 @@ export const lengthDescriptions = [
   export const formatDescriptions = [
     'Paragraphs: Continuous, readable text.',
     'Bullet Points: Concise list format.',
-    'Mix: A combination of both.',
+    'Mix: A combination of both paragraphs and bullet points.',
   ];
   

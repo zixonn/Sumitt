@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ToastAndroid, View } from 'react-native';
 import React, { useState } from 'react';
 import Page from '@/components/Page';
 import MyButton from '@/components/MyButton';
@@ -29,6 +29,7 @@ const options = () => {
     };
     router.setParams({ options: JSON.stringify(options) });
     setOptionsApplied(true); 
+    ToastAndroid.show('Options applied successfully',ToastAndroid.SHORT)
   };
 
   const { colors } = useTheme();

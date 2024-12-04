@@ -46,7 +46,6 @@ export default InputType;
 const styles = StyleSheet.create({
   con: {
     borderWidth: 1,
-    borderRadius: 10,
     width: "100%",
     height: "10%",
     marginBottom: '3%',

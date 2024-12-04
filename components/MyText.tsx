@@ -9,6 +9,7 @@ interface TextProps {
   opacity?:number;
   textAlign?:string;
   style?: TextStyle; 
+  numberOfLines?:number
   children: React.ReactNode;
 }
 
@@ -19,10 +20,12 @@ const fontSizes = {
   XL: 24,
 };
 
-const MyText = ({ color = useTheme().colors.text, fontSize = 'medium', bold = false, children, style, opacity, textAlign }: TextProps) => {
+const MyText = ({ color = useTheme().colors.text, fontSize = 'medium', bold = false, children, style, opacity, textAlign, numberOfLines }: TextProps) => {
   const fontWeight = bold ? 'bold' : 'normal';  
   return (
-    <Text style={[{ color, fontSize: fontSizes[fontSize], fontWeight, opacity, textAlign }, style]}>
+    <Text
+    numberOfLines={numberOfLines}
+     style={[{ color, fontSize: fontSizes[fontSize], fontWeight, opacity, textAlign }, style]}>
       {children}
     </Text>
   );

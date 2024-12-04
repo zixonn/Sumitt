@@ -1,16 +1,16 @@
-import { Button, StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Page from '@/components/Page';
 import InputType from '@/components/InputType';
 import MyButton from '@/components/MyButton';
-import { router, useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
-import { useTheme } from '@react-navigation/native';
+import { router, useGlobalSearchParams } from 'expo-router';
+import MyInput from '@/components/MyInput';
 
 const Upload = () => {
   
   const [selectedOption, setSelectedOption] = useState<string | null>(null); 
   const [inputText, setInputText] = useState("")
-  const [selectedOptions, setSelectedOptions] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState<string | string[] | null>(null); 
 
   const { options } = useGlobalSearchParams()
   useEffect(() => {
@@ -39,9 +39,6 @@ const Upload = () => {
     });
   }
 
-
-  const { colors } = useTheme();
-
   return (
     <Page style={{ justifyContent: 'flex-start', alignItems: "flex-start", margin: "5%" }}>
       <InputType name='URL' subtitle='Website or article URL' selected={selectedOption === 'URL'} onPress={() => handleSelectOption('URL')} />
@@ -49,10 +46,7 @@ const Upload = () => {
       {selectedOption ? (
         selectedOption === "URL" ? (
           <>
-            <TextInput 
-              value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter URL" 
-              textAlignVertical="top" returnKeyType="done" returnKeyLabel="Done" multiline 
-              style={[styles.textInput, { borderColor: colors.border, backgroundColor: colors.card, color: colors.text, height: "8%" }]} />
+            <MyInput height='10%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter URL" multiline />
             <View style = {styles.buttonRow}>
                 <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='30%' />
                 <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='30%' />
@@ -61,14 +55,14 @@ const Upload = () => {
           </>
         ) : (
           <>
-            <TextInput
-              value={inputText} onChangeText={text => setInputText(text)} placeholder="Enter text to summarize" 
-              textAlignVertical="top" returnKeyType="done" returnKeyLabel="Done" multiline 
-              style={[styles.textInput, { borderColor: colors.border, backgroundColor: colors.card, color: colors.text, height: "60%" }]} />
+            <MyInput height='50%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter text" multiline maxLength={10000} />
             <View style = {styles.buttonRow}>
-                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='30%' />
-                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='30%' />
-                <MyButton title='Cancel' onPress={handleCancel} width='30%' />
+                <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='50%' />
+                <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='50%' />
+            </View>
+            <View style = {styles.buttonRow}>
+              <MyButton title='Clear' onPress={() => setInputText('')} width='50%' />
+              <MyButton title='Cancel' onPress={handleCancel} width='50%' />
             </View>
           </>
         )
@@ -99,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flexDirection:"row",
-    marginVertical:"3%",
-    gap:"4%"
+    marginTop:"3%",
+    gap:"2%"
   }
 });

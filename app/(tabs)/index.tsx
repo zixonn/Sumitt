@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { View, StyleSheet, ScrollView, Alert } from "react-native";
+import { View, StyleSheet, ScrollView, Alert, TextInput } from "react-native";
 import Page from "@/components/Page";
 import MyText from "@/components/MyText";
 import SavedSummary from "@/components/SavedSummary";
+import MyInput from "@/components/MyInput";
 
 const Index = () => {
   const [summaries, setSummaries] = useState<Array<{ id: string; summary: string; timestamp: string }>>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredSummaries, setFilteredSummaries] = useState(summaries);
 
   useEffect(() => {
     const loadSummaries = async () => {
@@ -25,7 +28,9 @@ const Index = () => {
           })
         );
 
-        setSummaries(summariesData.filter(Boolean));
+        const validSummaries = summariesData.filter(Boolean);
+        setSummaries(validSummaries);
+        setFilteredSummaries(validSummaries);
       } catch (error) {
         console.error("Error loading summaries:", error);
       }
@@ -34,18 +39,26 @@ const Index = () => {
     loadSummaries();
   }, []);
 
+  useEffect(() => {
+    setFilteredSummaries(
+      summaries.filter((summary) =>
+        summary.id.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery, summaries]);
+
   const handleDelete = (id: string) => {
     Alert.alert(
       "Confirm Deletion",
       "Are you sure you want to delete this summary?",
       [
-        { text: "Cancel"},
+        { text: "Cancel" },
         {
           text: "Delete",
           onPress: async () => {
             try {
-              await AsyncStorage.removeItem(id); 
-              setSummaries((prevSummaries) => prevSummaries.filter((summary) => summary.id !== id)); 
+              await AsyncStorage.removeItem(id);
+              setSummaries((prevSummaries) => prevSummaries.filter((summary) => summary.id !== id));
             } catch (error) {
               console.error("Error deleting summary:", error);
             }
@@ -56,21 +69,31 @@ const Index = () => {
   };
 
   return (
-    <Page>
-      {summaries.length === 0 ? (
+    <Page style={{justifyContent:"flex-start"}}>
+       <MyInput 
+       style={{marginTop:"5%",marginBottom:"3%",width:"90%"}}
+       placeholder="Search..." 
+       value={searchQuery} 
+       onChangeText={ text => setSearchQuery(text)}
+       textAlignVertical="center"
+       />
+      {filteredSummaries.length === 0 ? (
         <>
-          <MyText style={{ opacity: 0.5 }}>No previous entries</MyText>
-          <MyText style={{ opacity: 0.5 }}>Tap "+" to get started</MyText>
+        <View style = {{position:"absolute",top:"50%"}}>
+          <MyText textAlign="center" style={{ opacity: 0.5 }}>No saved summaries</MyText>
+          <MyText textAlign="center" style={{ opacity: 0.5 }}>Tap "+" to get started</MyText>
+        </View>
         </>
       ) : (
-        <ScrollView contentContainerStyle={{ paddingTop: "5%", paddingBottom: "40%" }}>
-          {summaries.map((summary) => (
-            <SavedSummary 
-              key={summary.id} 
+        <ScrollView contentContainerStyle={{ marginTop: "5%", paddingBottom: "15%" }}>
+          {filteredSummaries.map((summary) => (
+            <SavedSummary
+              title={summary.id}
+              key={summary.id}
               id={summary.id}
-              timeStamp={summary.timestamp} 
+              timeStamp={summary.timestamp}
               summary={summary.summary}
-              onDelete={handleDelete}  
+              onDelete={handleDelete}
             />
           ))}
         </ScrollView>
