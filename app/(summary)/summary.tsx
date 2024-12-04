@@ -128,7 +128,7 @@ const Summary = () => {
       ) : (
         <Animated.View style={[{ opacity: fadeAnim }, styles.myCon]}>
           <View style={styles.headerCon}>
-            <View style = {{flexDirection:"row"}}>
+            <View style = {{flexDirection:"row",width:"20%", justifyContent:"space-around"}}>
               <Icon name="copy" type="ionicon" size={25} color={colors.primary} onPress={handleCopy} />
               <Icon size={25} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
             </View>
