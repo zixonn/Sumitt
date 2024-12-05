@@ -33,6 +33,9 @@ const Upload = () => {
   };
 
   async function generateSummary() {
+    if(selectedOption === "URL"){
+      
+    }
     router.navigate({
       pathname: "/(summary)/summary",
       params: { userInput: inputText, options: selectedOptions }

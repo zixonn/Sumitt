@@ -48,7 +48,7 @@ const NameModule = ({ visible, onPress, onCancel }: NameModuleProps) => {
             maxLength={25}
           />
           <View style={styles.buttonRow}>
-            <MyButton width="40%" title="Save" onPress={handleSave} />
+            <MyButton disabled = {!name} width="40%" title="Save" onPress={handleSave} />
             <MyButton width="40%" title="Cancel" onPress={onCancel} />
           </View>
         </View>

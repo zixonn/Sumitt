@@ -32,11 +32,12 @@ const Summary = () => {
           Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-3.5-turbo',
+          model: 'gpt-4o',
           messages: [
             {
               role: 'system',
-              content: `Summarize the text. Use the following options IF AVAILABLE: ${options}`,
+              content: `Your are a good summarizer. Summarize the text. Use the following options IF AVAILABLE: ${options} 
+              Summarize no matter what, even if there appears to be little to no detail`,
             },
             { role: 'user', content: userInput },
           ],
