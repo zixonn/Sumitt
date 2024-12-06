@@ -70,6 +70,7 @@ const Index = () => {
 
   return (
     <Page style={{justifyContent:"flex-start"}}>
+      {summaries.length > 0 &&
        <MyInput 
        style={{marginTop:"5%",marginBottom:"3%",width:"90%"}}
        placeholder="Search..." 
@@ -77,9 +78,10 @@ const Index = () => {
        onChangeText={ text => setSearchQuery(text)}
        textAlignVertical="center"
        />
+      }
       {filteredSummaries.length === 0 ? (
         <>
-        <View style = {{position:"absolute",top:"50%"}}>
+        <View style = {{position:"absolute",top:"45%"}}>
           <MyText textAlign="center" style={{ opacity: 0.5 }}>No saved summaries</MyText>
           <MyText textAlign="center" style={{ opacity: 0.5 }}>Tap "+" to get started</MyText>
         </View>

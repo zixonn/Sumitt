@@ -37,7 +37,7 @@ const Summary = () => {
             {
               role: 'system',
               content: `Your are a good summarizer. Summarize the text. Use the following options IF AVAILABLE: ${options} 
-              Summarize no matter what, even if there appears to be little to no detail`,
+              Summarize no matter what, even if there appears to be little to no detail. Don't ask for more detail.`,
             },
             { role: 'user', content: userInput },
           ],

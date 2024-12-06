@@ -7,17 +7,16 @@ import {StatusBar} from "expo-status-bar"
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === "dark" ? MyDarkTheme : MyLightTheme}>
-      <SafeAreaProvider>
-        <StatusBar />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)"/>
-          <Stack.Screen name="(options)"/>
-          <Stack.Screen name="(summary)"/>
-        </Stack>
-      </SafeAreaProvider>
-    </ThemeProvider>
+      <ThemeProvider value={colorScheme === "dark" ? MyDarkTheme : MyLightTheme}>
+        <SafeAreaProvider>
+          <StatusBar />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="(tabs)"/>
+            <Stack.Screen name="(options)"/>
+            <Stack.Screen name="(summary)"/>
+          </Stack>
+        </SafeAreaProvider>
+      </ThemeProvider>
   );
 }
