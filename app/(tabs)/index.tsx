@@ -17,17 +17,21 @@ const Index = () => {
         const allKeys = await AsyncStorage.getAllKeys();
         const summariesData = await Promise.all(
           allKeys.map(async (key) => {
-            const summaryData = await AsyncStorage.getItem(key);
-            if (summaryData) {
-              return {
-                id: key,
-                ...JSON.parse(summaryData),
-              };
+            try {
+              const summaryData = await AsyncStorage.getItem(key);
+              if (summaryData) {
+                const parsedData = JSON.parse(summaryData);
+                return { id: key, ...parsedData };
+              }
+              return null;
+            } catch (error) {
+              console.error(`Error parsing data for key ${key}:`, error);
+              return null;
             }
-            return null;
           })
         );
 
+        // Filter out any null values (invalid summaries)
         const validSummaries = summariesData.filter(Boolean);
         setSummaries(validSummaries);
         setFilteredSummaries(validSummaries);
@@ -69,23 +73,26 @@ const Index = () => {
   };
 
   return (
-    <Page style={{justifyContent:"flex-start"}}>
-      {summaries.length > 0 &&
-       <MyInput 
-       style={{marginTop:"5%",marginBottom:"3%",width:"90%"}}
-       placeholder="Search..." 
-       value={searchQuery} 
-       onChangeText={ text => setSearchQuery(text)}
-       textAlignVertical="center"
-       />
-      }
+    <Page style={{ justifyContent: "flex-start" }}>
+      {summaries.length > 0 && (
+        <MyInput
+          style={{ marginTop: "5%", marginBottom: "3%", width: "90%" }}
+          placeholder="Search..."
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+          textAlignVertical="center"
+        />
+      )}
+
       {filteredSummaries.length === 0 ? (
-        <>
-        <View style = {{position:"absolute",top:"45%"}}>
-          <MyText textAlign="center" style={{ opacity: 0.5 }}>No saved summaries</MyText>
-          <MyText textAlign="center" style={{ opacity: 0.5 }}>Tap "+" to get started</MyText>
+        <View style={{ position: "absolute", top: "45%" }}>
+          <MyText textAlign="center" style={{ opacity: 0.5 }}>
+            No saved summaries
+          </MyText>
+          <MyText textAlign="center" style={{ opacity: 0.5 }}>
+            Tap "+" to get started
+          </MyText>
         </View>
-        </>
       ) : (
         <ScrollView contentContainerStyle={{ marginTop: "5%", paddingBottom: "15%" }}>
           {filteredSummaries.map((summary) => (

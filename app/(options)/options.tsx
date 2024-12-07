@@ -10,7 +10,8 @@ import {
   lengthDescriptions, 
   detailDescriptions, 
   toneDescriptions, 
-  formatDescriptions 
+  formatDescriptions ,
+  languageDescriptions
 } from '../../constants/optionDescriptions';
 
 const options = () => {
@@ -18,6 +19,7 @@ const options = () => {
   const [selectedIndexDetail, setSelectedIndexDetail] = useState(0);
   const [selectedIndexTone, setSelectedIndexTone] = useState(0);
   const [selectedIndexFormat, setSelectedIndexFormat] = useState(0);
+  const [selectedIndexLanguage, setSelectedIndexLanguage] = useState(0);
   const [optionsApplied, setOptionsApplied] = useState(false); 
 
   const saveOptions = () => {
@@ -26,6 +28,7 @@ const options = () => {
       detail: detailDescriptions[selectedIndexDetail],
       tone: toneDescriptions[selectedIndexTone],
       format: formatDescriptions[selectedIndexFormat],
+      language: languageDescriptions[selectedIndexLanguage]
     };
     router.setParams({ options: JSON.stringify(options) });
     setOptionsApplied(true); 
@@ -91,6 +94,20 @@ const options = () => {
           backgroundColor: colors.card, borderColor: colors.border }}
       />
       <MyText opacity={0.5} fontSize='small'>{formatDescriptions[selectedIndexFormat]}</MyText>
+      <Divider width={10} />
+
+      <MyText bold>Language</MyText>
+      <ButtonGroup
+        buttons={['English', 'Spanish', 'French', 'Arabic']}
+        selectedIndex={selectedIndexLanguage}
+        onPress={(value) => setSelectedIndexLanguage(value)}
+        selectedButtonStyle={{ backgroundColor: colors.primary }}
+        innerBorderStyle={{ color: colors.border }}
+        containerStyle={{
+          marginVertical: '3%', width: '100%', marginLeft: "0%",
+          backgroundColor: colors.card, borderColor: colors.border }}
+      />
+      <MyText opacity={0.5} fontSize='small'>{languageDescriptions[selectedIndexLanguage]}</MyText>
       <Divider width={30} />
 
       <View style={styles.buttonRow}>

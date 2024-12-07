@@ -1,51 +1,43 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Page from '@/components/Page';
-import MyText from '@/components/MyText';
-import { useTheme } from '@react-navigation/native';
-import {Picker} from "@react-native-picker/picker"
-import { Divider, Icon } from '@rneui/base';
-import Version from '@/constants/Version';
-import { useNavigation } from 'expo-router';
+import React from "react";
+import { Linking, StyleSheet, View } from "react-native";
+import Page from "@/components/Page";
+import MyText from "@/components/MyText";
+import { Picker } from "@react-native-picker/picker";
+import { Divider, Icon } from "@rneui/base";
+import Version from "@/constants/Version";
+import { useNavigation } from "expo-router";
+import { useSettings } from "@/context/SettingsContext";
 
 const Settings = () => {
-  const {colors} = useTheme()
-  const navigation = useNavigation()
-    const [selectedTheme, setSelectedTheme] = useState("system");
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const { theme, setTheme, resolvedTheme } = useSettings();
+  const navigation = useNavigation();
 
-  
   return (
-    <Page style={{ alignItems: 'flex-start', justifyContent: 'flex-start', padding: '5%'}}>
+    <Page style={styles.page}>
       <MyText bold fontSize="large">Theme</MyText>
-      <MyText fontSize='small' opacity={0.5}>Customize your appearance</MyText>
-      <Picker 
-        style = {{width:"100%",color:colors.text, marginLeft:"-4%"}}
-        dropdownIconColor={colors.text}
-        selectedValue={selectedTheme} 
-        onValueChange={itemValue => setSelectedTheme(itemValue)}>
-        <Picker.Item  color={colors.text} label='Light' value={"light"}/>
-        <Picker.Item  color={colors.text} label='Dark' value={"dark"}/>
-        <Picker.Item  color={colors.text} label='Device Settings' value={"system"}/>
+      <MyText fontSize="small" opacity={0.5}>Customize your appearance</MyText>
+      <Picker
+        style={{ ...styles.picker, color: resolvedTheme.colors.text }}
+        dropdownIconColor={resolvedTheme.colors.text}
+        selectedValue={theme}
+        onValueChange={(value) => setTheme(value)}
+      >
+        <Picker.Item label="Light" value="light" />
+        <Picker.Item label="Dark" value="dark" />
+        <Picker.Item label="Device Settings" value="system" />
       </Picker>
       <Divider width={5} />
-      <MyText bold fontSize="large">Language</MyText> 
-      <MyText fontSize='small' opacity={0.5}>Choose your preferred language</MyText>
-      <Picker 
-        style = {{width:"100%",color:colors.text, marginLeft:"-4%"}}
-        dropdownIconColor={colors.text}
-        selectedValue={selectedLanguage} 
-        onValueChange={itemValue => setSelectedLanguage(itemValue)}>
-        <Picker.Item  color={colors.text} label='English' value={"en"}/>
-        <Picker.Item  color={colors.text} label='Spanish' value={"es"}/>
-        <Picker.Item  color={colors.text} label='French' value={"fr"}/>
-      </Picker>
-      <Divider width={5} />
-      <View style = {{flexDirection:"row", gap:"2%", alignItems:"center"}}>
+      <View style={styles.row}>
         <MyText bold fontSize="large">Privacy Policy</MyText>
-        <Icon name='external-link' type='feather' size={20} color={colors.text} />
+        <Icon
+          name="external-link"
+          type="feather"
+          size={20}
+          color={resolvedTheme.colors.text}
+          onPress={() => Linking.openURL("https://www.termsfeed.com/live/cd0fe929-9586-4ec3-a520-92eb05b678be")}
+        />
       </View>
-      <MyText fontSize='small' opacity={0.5}>Reiew our privacy policy</MyText>
+      <MyText fontSize="small" opacity={0.5}> Review Sumitt's privacy policy</MyText>
       <Divider width={20} />
       <MyText bold fontSize="large">Version</MyText>
       <MyText opacity={0.5} fontSize="small">{Version}</MyText>
@@ -56,10 +48,18 @@ const Settings = () => {
 export default Settings;
 
 const styles = StyleSheet.create({
-  accordionCon:{
-    width:"100%",
-    marginTop:"3%",
-    marginBottom:"7%",
-    borderWidth:0.5
-  }
+  page: {
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
+    padding: "5%",
+  },
+  picker: {
+    width: "100%",
+    marginLeft: "-4%",
+  },
+  row: {
+    flexDirection: "row",
+    gap: "2%",
+    alignItems: "center",
+  },
 });

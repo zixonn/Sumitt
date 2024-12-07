@@ -1,42 +1,52 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { MyDarkTheme, MyLightTheme } from "@/constants/Colors";
-import { useColorScheme } from "react-native";
+import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react';
+import { MyLightTheme, MyDarkTheme } from '@/constants/Colors';
+import { useColorScheme } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type ThemeType = {
-  colors: {
-    primary: string;
-    background: string;
-    card: string;
-    text: string;
-    border: string;
-    notification: string;
-  };
-  dark: boolean;
-  fonts: {
-    regular: object;
-    medium: object;
-    bold: object;
-    heavy: object;
-  };
-};
+type ThemeType = 'light' | 'dark' | 'system';
 
 interface SettingsContextType {
   theme: ThemeType;
-  language: string;
   setTheme: (theme: ThemeType) => void;
-  setLanguage: (language: string) => void;
+  resolvedTheme: typeof MyLightTheme | typeof MyDarkTheme;
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export const SettingsProvider = ({ children }: { children: ReactNode }) => {
-  const systemTheme = useColorScheme();
-  
-  const [theme, setTheme] = useState<ThemeType>(systemTheme === "dark" ? MyDarkTheme : MyLightTheme);
-  const [language, setLanguage] = useState("en");
+  const [theme, setThemeState] = useState<ThemeType>('system');
+  const systemScheme = useColorScheme();
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const savedTheme = await AsyncStorage.getItem('theme');
+        if (savedTheme) {
+          setThemeState(savedTheme as ThemeType);
+        }
+      } catch (error) {
+        console.error('Failed to load theme from storage:', error);
+      }
+    };
+    loadSettings();
+  }, []);
+
+  const setTheme = async (newTheme: ThemeType) => {
+    try {
+      await AsyncStorage.setItem('theme', newTheme);
+      setThemeState(newTheme);
+    } catch (error) {
+      console.error('Failed to save theme to storage:', error);
+    }
+  };
+
+  const resolvedTheme = useMemo(() => {
+    const activeTheme = theme === 'system' ? systemScheme : theme;
+    return activeTheme === 'dark' ? MyDarkTheme : MyLightTheme;
+  }, [theme, systemScheme]);
 
   return (
-    <SettingsContext.Provider value={{ theme, language, setTheme, setLanguage }}>
+    <SettingsContext.Provider value={{ theme, setTheme, resolvedTheme }}>
       {children}
     </SettingsContext.Provider>
   );
@@ -45,7 +55,7 @@ export const SettingsProvider = ({ children }: { children: ReactNode }) => {
 export const useSettings = () => {
   const context = useContext(SettingsContext);
   if (!context) {
-    throw new Error("useSettings must be used within a SettingsProvider");
+    throw new Error('useSettings must be used within a SettingsProvider');
   }
   return context;
 };

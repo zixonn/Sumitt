@@ -20,4 +20,12 @@ export const lengthDescriptions = [
     'Bullet Points: Concise list format.',
     'Mix: A combination of both paragraphs and bullet points.',
   ];
+
+  export const languageDescriptions = [
+    'English: The default language for international communication.',
+    'Spanish: Widely spoken in Spain, Latin America, and parts of the United States.',
+    'French: Spoken in France, parts of Canada, and many African countries.',
+    'Arabic: Used across the Middle East and North Africa, with a rich cultural and historical context.',
+  ];
+  
   

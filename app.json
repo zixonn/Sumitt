@@ -35,17 +35,12 @@
         }
       ],
       [
-        "expo-image-picker",
+        "expo-build-properties",
         {
-          "photosPermission": "The app accesses your photos to help summarize notes"
-        }
-      ],
-      [
-        "expo-camera",
-        {
-          "cameraPermission": "Allow Sumitt to access your camera",
-          "microphonePermission": "Allow Sumitt to access your microphone",
-          "recordAudioAndroid": true
+          "android": 
+          {
+            "enableProguardInReleaseBuilds": true 
+          }
         }
       ]
     ],
