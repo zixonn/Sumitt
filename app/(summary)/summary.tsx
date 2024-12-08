@@ -36,8 +36,14 @@ const Summary = () => {
           messages: [
             {
               role: 'system',
-              content: `Your are a good summarizer. Summarize the text. Use the following options IF AVAILABLE: ${options} 
-              Summarize no matter what, even if there appears to be little to no detail. Don't ask for more detail.`,
+              content: `You are a professional summarizer. Your goal is to create concise and meaningful summaries of the provided text. Follow these guidelines:
+              1. Use the provided options when available: ${options}.
+              2. Always generate a summary, even if the input text lacks substantial details.
+              3. Avoid asking for clarification or additional details.
+              
+              Input Text:
+              {userInput}`
+              ,
             },
             { role: 'user', content: userInput },
           ],

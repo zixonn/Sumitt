@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Sumitt-1",
+    "name": "Sumitt",
     "slug": "Sumitt-1",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,7 +14,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#6ad478"
       },
       "softwareKeyboardLayoutMode": "pan"
     },
@@ -28,10 +28,8 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "image": "./assets/images/splash.png",
+          "backgroundColor": "#6ad478"
         }
       ],
       [
