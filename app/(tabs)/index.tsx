@@ -15,8 +15,11 @@ const Index = () => {
     const loadSummaries = async () => {
       try {
         const allKeys = await AsyncStorage.getAllKeys();
+        
+        const filteredKeys = allKeys.filter(key => key !== 'theme');
+        
         const summariesData = await Promise.all(
-          allKeys.map(async (key) => {
+          filteredKeys.map(async (key) => {
             try {
               const summaryData = await AsyncStorage.getItem(key);
               if (summaryData) {
@@ -31,7 +34,6 @@ const Index = () => {
           })
         );
 
-        // Filter out any null values (invalid summaries)
         const validSummaries = summariesData.filter(Boolean);
         setSummaries(validSummaries);
         setFilteredSummaries(validSummaries);
@@ -46,7 +48,7 @@ const Index = () => {
   useEffect(() => {
     setFilteredSummaries(
       summaries.filter((summary) =>
-        summary.id.toLowerCase().includes(searchQuery.toLowerCase())
+        summary.id.toLowerCase().startsWith(searchQuery.toLowerCase())
       )
     );
   }, [searchQuery, summaries]);
