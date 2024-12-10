@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#6ad478"
       },
-      "softwareKeyboardLayoutMode": "pan"
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.nnadozi.Sumitt"
     },
     "web": {
       "bundler": "metro",
@@ -25,7 +26,7 @@
     },
     "splash": {
       "image": "./assets/images/splash.png",
-      "resizeMode": "contain", 
+      "resizeMode": "contain",
       "backgroundColor": "#6ad478"
     },
     "plugins": [
@@ -40,15 +41,22 @@
       [
         "expo-build-properties",
         {
-          "android": 
-          {
-            "enableProguardInReleaseBuilds": true 
+          "android": {
+            "enableProguardInReleaseBuilds": true
           }
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "0cc35df7-4b9f-4365-8770-aa34347f6395"
+      }
     }
   }
 }
