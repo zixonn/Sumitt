@@ -25,6 +25,9 @@ const Summary = () => {
   const generateSummary = async () => {
     try {
       const apiKey = process.env.EXPO_PUBLIC_API_KEY;
+      
+      fadeAnim.setValue(0);
+  
       const res = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -46,22 +49,22 @@ const Summary = () => {
                 7. Don't use bold, italics, or any other type of markdown style.
                 8. ALWAYS USE THIS CHARACTER for the bullets: •
                 Input Text:
-                {userInput}`
-
+                {userInput}`,
             },
             { role: 'user', content: userInput },
           ],
         }),
       });
-
+  
       if (!res.ok) {
         throw new Error('Failed to fetch summary');
       }
-
+  
       const data = await res.json();
       setSummary(data.choices?.[0]?.message?.content);
       setError(null);
       setLoading(false);
+  
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 1000,
@@ -73,6 +76,7 @@ const Summary = () => {
       setSummary('');
     }
   };
+  
 
   useEffect(() => {
     if (userInput) {

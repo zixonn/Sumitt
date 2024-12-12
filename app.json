@@ -17,17 +17,18 @@
         "backgroundColor": "#6ad478"
       },
       "softwareKeyboardLayoutMode": "pan",
-      "package": "com.nnadozi.Sumitt"
+      "package": "com.nnadozi.Sumitt",
+      "splash": {
+        "image": "./assets/images/splash.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#6ad478",
+        "imageWidth": 1100
+      }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
-    },
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#6ad478"
     },
     "plugins": [
       "expo-router",
@@ -35,7 +36,8 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/splash.png",
-          "backgroundColor": "#6ad478"
+          "backgroundColor": "#6ad478",
+          "imageWidth": 1100
         }
       ],
       [

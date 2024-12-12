@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: "100%",
-    marginLeft: "-4%",
+    marginLeft: "-1%",
   },
   row: {
     flexDirection: "row",
