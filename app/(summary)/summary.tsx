@@ -10,6 +10,7 @@ import { Icon } from '@rneui/base';
 import * as Clipboard from 'expo-clipboard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NameModule from '@/components/NameModule';
+import * as NetInfo from '@react-native-community/netinfo';
 
 const Summary = () => {
   const [loading, setLoading] = useState(true);
@@ -26,8 +27,15 @@ const Summary = () => {
     try {
       const apiKey = process.env.EXPO_PUBLIC_API_KEY;
       
+      const netInfo = await NetInfo.fetch();
+      if (!netInfo.isConnected) {
+        setError('No internet connection');
+        setLoading(false);
+        return;
+      }
+
       fadeAnim.setValue(0);
-  
+
       const res = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -55,16 +63,16 @@ const Summary = () => {
           ],
         }),
       });
-  
+
       if (!res.ok) {
         throw new Error('Failed to fetch summary');
       }
-  
+
       const data = await res.json();
       setSummary(data.choices?.[0]?.message?.content);
       setError(null);
       setLoading(false);
-  
+
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 1000,
@@ -76,7 +84,6 @@ const Summary = () => {
       setSummary('');
     }
   };
-  
 
   useEffect(() => {
     if (userInput) {
