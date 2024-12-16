@@ -38,7 +38,7 @@ const Settings = () => {
         />
       </View>
       <MyText fontSize="small" opacity={0.5}> Review Sumitt's privacy policy</MyText>
-      <Divider width={20} />
+      <Divider width={10} />
       <MyText bold fontSize="large">Version</MyText>
       <MyText opacity={0.5} fontSize="small">{Version}</MyText>
     </Page>

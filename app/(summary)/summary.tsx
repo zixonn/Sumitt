@@ -55,7 +55,6 @@ const Summary = () => {
                 5. Do not apologize.
                 6. NEVER DISPLAY THE OPTIONS OBJECT
                 7. Don't use bold, italics, or any other type of markdown style.
-                8. ALWAYS USE THIS CHARACTER for the bullets: •
                 Input Text:
                 {userInput}`,
             },
