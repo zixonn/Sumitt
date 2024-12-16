@@ -39,3 +39,6 @@ app-example
 
 #openai 
 .env
+
+# Local Netlify folder
+.netlify

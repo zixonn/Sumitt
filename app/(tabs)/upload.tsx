@@ -32,20 +32,47 @@ const Upload = () => {
     router.back();          
   };
 
-  async function generateSummary() {
-    if(selectedOption === "URL"){
-      
+  const generateSummary = async () => {
+    if (selectedOption === "URL") {
+      try {
+        const url = inputText;
+
+        const response = await fetch(url);
+        const html = await response.text();
+
+        const contentMatches = html.match(/<p[^>]*>(.*?)<\/p>|<h[1-6][^>]*>(.*?)<\/h[1-6]>|<li[^>]*>(.*?)<\/li>/g);
+
+        if (contentMatches) {
+          const pageContent = contentMatches
+            .map((match) => {
+              const cleanedText = match.replace(/<[^>]+>/g, '').trim();
+              return cleanedText;
+            })
+            .filter(Boolean) 
+            .join(' '); 
+
+          router.navigate({
+            pathname: "/(summary)/summary",
+            params: { userInput: pageContent, options: selectedOptions }
+          });
+        } else {
+          console.error('No relevant content found in the page');
+        }
+      } catch (error) {
+        console.error('Error scraping content: ', error);
+      }
+    } else {
+      router.navigate({
+        pathname: "/(summary)/summary",
+        params: { userInput: inputText, options: selectedOptions }
+      });
     }
-    router.navigate({
-      pathname: "/(summary)/summary",
-      params: { userInput: inputText, options: selectedOptions }
-    });
-  }
+  };
 
   return (
     <Page style={{ justifyContent: 'flex-start', alignItems: "flex-start", margin: "5%" }}>
-      <InputType name='URL' subtitle='Website or article URL' selected={selectedOption === 'URL'} onPress={() => handleSelectOption('URL')} />
       <InputType name='Manual Input' subtitle='Input text manually' selected={selectedOption === 'Manual Input'} onPress={() => handleSelectOption('Manual Input')} />
+      <InputType name='URL' subtitle='Kinda in progress (might not work)' selected={selectedOption === 'URL'} onPress={() => handleSelectOption('URL')} />
       {selectedOption ? (
         selectedOption === "URL" ? (
           <>
