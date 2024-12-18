@@ -85,7 +85,7 @@ const Upload = () => {
           </>
         ) : (
           <>
-            <MyInput height='50%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter text" multiline maxLength={10000} />
+            <MyInput height='50%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter text or paste from source" multiline maxLength={10000} />
             <View style = {styles.buttonRow}>
                 <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='50%' />
                 <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='50%' />
