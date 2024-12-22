@@ -19,19 +19,21 @@ export default function MainNavigator() {
 
   return (
     <Tabs screenOptions={{ tabBarShowLabel: false, tabBarStyle: { paddingTop: "1%" }, 
-    headerShadowVisible:!useTheme().dark }}>
+    headerShadowVisible:!useTheme().dark,headerTitleAlign:"left" }}>
       <Tabs.Screen name="index" options={screenOptions("history", "History")} />
       <Tabs.Screen
         name="upload"
         options={{
           title: "Select Input Type",
           tabBarButton: () => (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center",marginBottom:"50%" }}>
             <TouchableOpacity
               style={[styles.uploadButton, { backgroundColor: colors.primary }]}
               onPress={() => router.navigate("/upload")} 
             >
               <Icon name="add" size={25} color="#fff" />
             </TouchableOpacity>
+            </View>
           ),
           tabBarStyle: { display:"none"}, 
           ...TransitionPresets.ShiftTransition,
@@ -46,14 +48,9 @@ const styles = StyleSheet.create({
   uploadButton: {
     width: 60,
     height: 60,
-    borderRadius: 35,
+    borderRadius: 30, 
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 10,
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: [{ translateX: -35 }, { translateY: -50 }],
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,

@@ -72,7 +72,7 @@ const Upload = () => {
   return (
     <Page style={{ justifyContent: 'flex-start', alignItems: "flex-start", margin: "5%" }}>
       <InputType name='Manual Input' subtitle='Input text manually' selected={selectedOption === 'Manual Input'} onPress={() => handleSelectOption('Manual Input')} />
-      <InputType name='URL' subtitle='Kinda in progress (might not work)' selected={selectedOption === 'URL'} onPress={() => handleSelectOption('URL')} />
+      <InputType name='URL' subtitle='Input article URL' selected={selectedOption === 'URL'} onPress={() => handleSelectOption('URL')} />
       {selectedOption ? (
         selectedOption === "URL" ? (
           <>
@@ -85,7 +85,7 @@ const Upload = () => {
           </>
         ) : (
           <>
-            <MyInput height='50%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter text or paste from source" multiline maxLength={10000} />
+            <MyInput height='50%' value={inputText} onChangeText={ text => setInputText(text)} placeholder="Enter text" multiline maxLength={10000} />
             <View style = {styles.buttonRow}>
                 <MyButton disabled = {!inputText} title='Summarize' onPress={generateSummary} width='50%' />
                 <MyButton title='Options' onPress={ () => router.navigate("/(options)/options")} width='50%' />

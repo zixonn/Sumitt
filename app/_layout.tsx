@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { SettingsProvider, useSettings } from "@/context/SettingsContext";
-import { NavigationContainer, ThemeProvider } from "@react-navigation/native";
+import { ThemeProvider } from "@react-navigation/native";
 import { MyDarkTheme } from "@/constants/Colors";
 
 export default function RootLayout() {

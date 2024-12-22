@@ -25,8 +25,6 @@ const Summary = () => {
 
   const generateSummary = async () => {
     try {
-      const apiKey = process.env.EXPO_PUBLIC_API_KEY;
-      
       const netInfo = await NetInfo.fetch();
       if (!netInfo.isConnected) {
         setError('No internet connection');
@@ -35,54 +33,48 @@ const Summary = () => {
       }
 
       fadeAnim.setValue(0);
-
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      setLoading(true);
+      setError(null);
+  
+      const res = await fetch('http://192.168.0.151:3000/api/summarize', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: 'gpt-4o-mini',
-          messages: [
-            {
-              role: 'system',
-              content: `You are a professional summarizer. Your goal is to create a concise, meaningful, and complete summary of the provided text, no matter how short or random the input may be. Follow these guidelines:
-                1. Use the provided options exactly when available: ${options}.
-                2. Always generate a summary, even if the input text is just a word or lacks substantial details.
-                3. If the input is too short or unclear, generate a thoughtful, complete response by providing context, interpretations, or relevant details to create a coherent summary.
-                4. Do not ask for clarification or additional details. Ensure the summary is always generated.
-                5. Do not apologize.
-                6. NEVER DISPLAY THE OPTIONS OBJECT
-                7. Don't use bold, italics, or any other type of markdown style.
-                Input Text:
-                {userInput}`,
-            },
-            { role: 'user', content: userInput },
-          ],
+          userInput, 
+          options,  
         }),
       });
-
+  
       if (!res.ok) {
-        throw new Error('Failed to fetch summary');
+        throw new Error('Failed to fetch summary from server');
       }
-
+  
       const data = await res.json();
-      setSummary(data.choices?.[0]?.message?.content);
-      setError(null);
+      const summaryContent = data.choices?.[0]?.message?.content;
+  
+      if (!summaryContent) {
+        throw new Error('No summary content returned from server');
+      }
+  
+      setSummary(summaryContent);
       setLoading(false);
-
+  
       Animated.timing(fadeAnim, {
         toValue: 1,
         duration: 1000,
         useNativeDriver: true,
       }).start();
+
     } catch (error) {
-      console.error(error);
+      console.error('Error generating summary:', error);
       setError('Something went wrong.');
       setSummary('');
+      setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     if (userInput) {
