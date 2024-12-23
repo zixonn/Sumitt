@@ -1,5 +1,5 @@
 # Sumitt 👋
-AI app in progress
+AI summary app in progress
 
 
 
