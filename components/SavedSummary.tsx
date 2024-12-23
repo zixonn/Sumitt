@@ -4,6 +4,7 @@ import MyText from './MyText';
 import { useTheme } from '@react-navigation/native';
 import { Icon } from '@rneui/base';
 import * as Clipboard from 'expo-clipboard';
+import { router } from 'expo-router';
 
 interface SavedSummaryProps {
   id: string;
@@ -15,7 +16,6 @@ interface SavedSummaryProps {
 
 const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryProps) => {
   const { colors } = useTheme();
-  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleDelete = () => {
     onDelete(id);
@@ -26,11 +26,13 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
   };
 
   const handleExpand = () => {
-    setIsExpanded(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsExpanded(false);
+    router.navigate({
+      pathname:"/(saved)/[id]",
+      params:{
+        id:id,
+        summary:summary
+       }
+    })
   };
 
   const handleShare = async () => {
@@ -52,29 +54,11 @@ const SavedSummary = ({ id, timeStamp, summary, onDelete, title }: SavedSummaryP
       </View>
       <MyText numberOfLines={3}>{summary}</MyText>
       <View style={styles.bottomRow}>
-          <Icon size={25} color={colors.primary} name="delete" onPress={handleDelete} />
-          <Icon size={25} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
-          <Icon size={25} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
-          <Icon size={25} color={colors.primary} name="expand" type='ionicon' onPress={handleExpand} />
+          <Icon size={22} color={colors.primary} name="delete" onPress={handleDelete} />
+          <Icon size={22} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
+          <Icon size={22} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
+          <Icon size={22} color={colors.primary} name="expand" type='ionicon' onPress={handleExpand} />
       </View>
-      <Modal visible={isExpanded} animationType="fade" transparent={true}>
-        <View style={styles.modalOverlay}>
-          <View style={[styles.modalContent, { backgroundColor: colors.card }]}>
-            <View style={styles.modalHeader}>
-              <MyText bold fontSize="large">{title}</MyText>
-              <Icon name="close" type="ionicon" color={colors.primary} onPress={handleCloseModal} />
-            </View>
-            <ScrollView style={styles.scrollContainer}>
-              <MyText>{summary}</MyText>
-            </ScrollView>
-            <View style={styles.modalActions}>
-              <Icon size={25} color={colors.primary} name="delete" onPress={handleDelete} />
-              <Icon size={25} color={colors.primary} name="copy" type="ionicon"  onPress={handleCopy} />
-              <Icon size={25} color={colors.primary} name="share" type='ionicon' onPress={handleShare} />
-            </View>
-          </View>
-        </View>
-      </Modal>
     </View>
   );
 };
@@ -101,29 +85,5 @@ const styles = StyleSheet.create({
     marginTop:"4%",
     marginBottom:"-5%",
     gap:"2%"
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.25)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: '85%',
-    maxHeight: '80%',
-    padding:"5%"
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  scrollContainer: {
-    marginVertical: "3%",
-  },
-  modalActions: {
-    flexDirection: 'row',
-    marginVertical:"3%",
-    gap:"2%",
   },
 });

@@ -1,15 +1,17 @@
 import { Text, TextStyle } from 'react-native';
 import React from 'react';
 import { useTheme } from '@react-navigation/native';
+import Markdown from 'react-native-markdown-display';
 
 interface TextProps {
   color?: string;
   fontSize?: 'small' | 'medium' | 'large' | 'XL';  
   bold?: boolean;  
-  opacity?:number;
-  textAlign?:string;
+  opacity?: number;
+  textAlign?: string;
   style?: TextStyle; 
-  numberOfLines?:number
+  numberOfLines?: number;
+  markdown?: boolean;
   children: React.ReactNode;
 }
 
@@ -20,12 +22,35 @@ const fontSizes = {
   XL: 24,
 };
 
-const MyText = ({ color = useTheme().colors.text, fontSize = 'medium', bold = false, children, style, opacity, textAlign, numberOfLines }: TextProps) => {
+const MyText = ({
+  color = useTheme().colors.text,
+  fontSize = 'medium',
+  bold = false,
+  children,
+  style,
+  opacity,
+  textAlign,
+  numberOfLines,
+  markdown,
+}: TextProps) => {
   const fontWeight = bold ? 'bold' : 'normal';  
-  return (
+
+  const markdownStyles = {
+    body: {
+      color, 
+      fontSize: fontSizes[fontSize],
+    },
+  };
+
+  return markdown ? (
+    <Markdown style={markdownStyles}>
+      {children}
+    </Markdown>
+  ) : (
     <Text
-    numberOfLines={numberOfLines}
-     style={[{ color, fontSize: fontSizes[fontSize], fontWeight, opacity, textAlign }, style]}>
+      numberOfLines={numberOfLines}
+      style={[{ color, fontSize: fontSizes[fontSize], fontWeight, opacity, textAlign }, style]}
+    >
       {children}
     </Text>
   );

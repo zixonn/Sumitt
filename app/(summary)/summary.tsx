@@ -89,7 +89,13 @@ const Summary = () => {
   const handleSave = async (name: string) => {
     setModuleVisible(false);
     try {
-      const currentDate = new Date().toLocaleString();
+      const currentDate = new Date().toLocaleString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+      });
       const newSummary = {
         summary,
         timestamp: currentDate,
@@ -148,7 +154,7 @@ const Summary = () => {
             <MyText bold fontSize="large">Summary</MyText>
           </View>
           <ScrollView contentContainerStyle={{ paddingBottom: '20%' }}>
-            <MyText>{summary}</MyText>
+            <MyText markdown>{summary}</MyText>
           </ScrollView>
           <View style={styles.buttonRow}>
             <MyButton width="30%" title="Save" onPress={() => setModuleVisible(true)} />
